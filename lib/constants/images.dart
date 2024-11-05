@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_single_quotes
-class Assets {
-  Assets._();
+class Images {
+  Images._();
 
   /// Assets for assetsImagesFlutter background
   /// assets/images/flutter background.png
