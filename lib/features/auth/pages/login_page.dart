@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/images.dart';
+import '../../../constants/images.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -15,7 +15,10 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-                Image.asset(Images.assetsImagesYoutubeSignin),
+                Image.asset(
+                  Images.assetsImagesYoutubeSignin,
+                  height: 150,
+                ),
                 const SizedBox(
                   height: 25,
                 ),
@@ -28,7 +31,16 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Image.asset(Images.assetsImagesSigninwithgoogle),
+                GestureDetector(
+                  onTap: () {},
+                  child: Image.asset(
+                    Images.assetsImagesSigninwithgoogle,
+                    height: 60,
+                  ),
+                ),
+                const SizedBox(
+                  height: 55,
+                ),
               ],
             ),
           ),
