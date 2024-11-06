@@ -20,15 +20,11 @@ class AuthService {
 
   Future<UserCredential> signInWithGoogle() async {
     final user = await googleSignIn.signIn();
-    if (user == null) {
-      return Future.error('Sign in aborted');
-    } else {
-      final googleAuth = await user.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      return await auth.signInWithCredential(credential);
-    }
+    final googleAuth = await user!.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    return await auth.signInWithCredential(credential);
   }
 }
