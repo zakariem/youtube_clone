@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_clone/features/auth/pages/login_page.dart';
+import 'package:youtube_clone/features/auth/pages/profile.dart';
 import 'package:youtube_clone/firebase_options.dart';
 import 'package:youtube_clone/home_page.dart';
 
@@ -39,7 +40,7 @@ class AuthStateHandler extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasData) {
-          return const HomePage();
+          return const Profile();
         } else {
           return const LoginPage();
         }
