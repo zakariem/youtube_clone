@@ -4,12 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final authServiceProvider = Provider<AuthService>(
-  (ref) => AuthService(),
+  (ref) => AuthService(
+    auth: FirebaseAuth.instance,
+    googleSignIn: GoogleSignIn(),
+  ),
 );
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _auth;
+  final GoogleSignIn _googleSignIn;
+
+  AuthService({
+    required FirebaseAuth auth,
+    required GoogleSignIn googleSignIn,
+  })  : _auth = auth,
+        _googleSignIn = googleSignIn;
 
   Future<UserCredential?> signInWithGoogle() async {
     try {

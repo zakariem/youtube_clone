@@ -1,13 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 class UserModel {
   final String displayName;
   final String username;
   final String email;
   final String profilePic;
-  final String subscribers;
-  final String videos;
+  final List<String> subscribers;
+  final int videos;
   final String uid;
   final String des;
   final String type;
@@ -44,16 +43,11 @@ class UserModel {
       username: map['username'] as String,
       email: map['email'] as String,
       profilePic: map['profilePic'] as String,
-      subscribers: map['subscribers'] as String,
-      videos: map['videos'] as String,
+      subscribers: List<String>.from(map['subscribers'] ?? []),
+      videos: map['videos'] as int,
       uid: map['uid'] as String,
       des: map['des'] as String,
       type: map['type'] as String,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
