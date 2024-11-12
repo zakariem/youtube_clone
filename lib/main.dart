@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_clone/features/auth/pages/login_page.dart';
 import 'package:youtube_clone/features/auth/pages/profile.dart';
 import 'package:youtube_clone/firebase_options.dart';
-import 'package:youtube_clone/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
