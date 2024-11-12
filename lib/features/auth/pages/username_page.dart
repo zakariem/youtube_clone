@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_clone/features/auth/repository/user_data_service.dart';
 
 import '../repository/profile_service.dart';
 
-class Profile extends ConsumerStatefulWidget {
-  const Profile({super.key});
+class UsernamePage extends ConsumerStatefulWidget {
+  const UsernamePage({super.key});
 
   @override
-  ConsumerState<Profile> createState() => _ProfileState();
+  ConsumerState<UsernamePage> createState() => _UsernamePageState();
 }
 
-class _ProfileState extends ConsumerState<Profile> {
+class _UsernamePageState extends ConsumerState<UsernamePage> {
   final TextEditingController _usernameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -20,7 +21,7 @@ class _ProfileState extends ConsumerState<Profile> {
     super.dispose();
   }
 
-  // Corrected: Read the profileProvider and validate the username
+  // Corrected: Read the UsernameProvider and validate the username
   Future<void> validateUsername() async {
     final profileService = ref.read(profileProvider);
     final username = _usernameController.text.trim();
@@ -79,9 +80,13 @@ class _ProfileState extends ConsumerState<Profile> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      await validateUsername(); // Trigger validation on button press
+                      await validateUsername();
                       if (_formKey.currentState?.validate() ?? false) {
-                        // Handle successful validation
+                        await ref
+                            .read(userDataServiceProvider)
+                            .addUserDataToFirestore(
+                              username: _usernameController.text.trim(),
+                            );
                       }
                     },
                     style: const ButtonStyle(
