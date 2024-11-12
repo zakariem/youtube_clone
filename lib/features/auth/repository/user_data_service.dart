@@ -21,21 +21,17 @@ class UserDataService {
         _firestore = firestore;
 
   addUserDataToFirestore({
-    required String displayName,
     required String username,
-    required String email,
-    required String profilePic,
-    required String des,
   }) async {
     final user = UserModel(
-      displayName: displayName,
+      displayName: _auth.currentUser!.displayName!,
       username: username,
-      email: email,
-      profilePic: profilePic,
+      email: _auth.currentUser!.email!,
+      profilePic: _auth.currentUser!.photoURL!,
       subscribers: [],
       videos: 0,
       uid: _auth.currentUser!.uid,
-      des: des,
+      des: "",
       type: "user",
     );
 
