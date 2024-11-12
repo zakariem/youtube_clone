@@ -6,6 +6,8 @@ import 'package:youtube_clone/features/auth/pages/login_page.dart';
 import 'package:youtube_clone/features/auth/pages/profile.dart';
 import 'package:youtube_clone/firebase_options.dart';
 
+import 'cores/screens/loader.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -35,9 +37,7 @@ class AuthStateHandler extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+          return const Loader();
         } else if (snapshot.hasData) {
           return const Profile();
         } else {

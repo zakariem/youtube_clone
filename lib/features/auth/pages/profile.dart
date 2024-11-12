@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../repository/profile_providers.dart';
+import '../repository/profile_service.dart';
 
 class Profile extends ConsumerStatefulWidget {
   const Profile({super.key});
@@ -72,23 +72,29 @@ class _ProfileState extends ConsumerState<Profile> {
                     }
                     return null;
                   },
-                  onChanged: (value) {
-                    validateUsername(); // Trigger the validation on each change
-                  },
+                  autovalidateMode: AutovalidateMode.onUnfocus,
                 ),
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      await validateUsername(); // Trigger validation on button press
                       if (_formKey.currentState?.validate() ?? false) {
                         // Handle successful validation
                       }
                     },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    style: const ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.green),
                     ),
-                    child: const Text('Continue'),
+                    child: const Text(
+                      'Continue',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ],
