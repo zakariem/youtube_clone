@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_clone/cores/widgets/image_button.dart';
+import 'features/auth/provider/user_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -49,13 +51,31 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 12),
-                  child: CircleAvatar(
-                    radius: 14,
-                    backgroundColor: Colors.grey,
-                  ),
-                ),
+                Consumer(builder: (context, ref, child) {
+                  final userData = ref.watch(currentUserProvider);
+
+                  return userData.when(
+                    data: (data) => Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: CircleAvatar(
+                        radius: 14,
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(data.profilePic),
+                      ),
+                    ),
+                    loading: () => const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: CircleAvatar(
+                        radius: 14,
+                        backgroundColor: Colors.grey,
+                      ),
+                    ),
+                    error: (error, stackTrace) => const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
+                  );
+                }),
               ],
             ),
           ],
