@@ -40,4 +40,11 @@ class UserDataService {
         .doc(_auth.currentUser!.uid)
         .set(user.toMap());
   }
+
+  Future<UserModel> fetchCurrentUserData() async {
+    DocumentSnapshot userDoc =
+        await _firestore.collection("users").doc(_auth.currentUser!.uid).get();
+    UserModel user = UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
+    return user;
+  }
 }
