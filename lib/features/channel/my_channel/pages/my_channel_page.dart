@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:youtube_clone/cores/colors.dart';
+import 'package:youtube_clone/cores/widgets/image_button.dart';
+
+import '../../../../constants/icons.dart';
 
 class MyChannelPage extends StatelessWidget {
   const MyChannelPage({super.key});
@@ -42,18 +46,40 @@ class MyChannelPage extends StatelessWidget {
                   'More About This Channel',
                 ),
                 const SizedBox(height: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7),
-                    color: Colors.grey.shade300,
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Manage Videos',
-                      style: TextStyle(color: Colors.black),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        height: 41,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7),
+                          color: softBlueGreyBackGround,
+                        ),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Manage Videos',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: ImageButton(
+                        onPressed: () {},
+                        image: Iconst.assetsIconsPen,
+                        haveColor: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: ImageButton(
+                        onPressed: () {},
+                        image: Iconst.assetsIconsTimeWatched,
+                        haveColor: true,
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),

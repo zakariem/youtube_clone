@@ -29,7 +29,7 @@ class ImageButton extends StatelessWidget {
             ),
           ),
           child: Image.asset(
-            "assets/icons/$image",
+            image,
             height: 23,
           ),
         ),

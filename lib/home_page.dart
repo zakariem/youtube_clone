@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_clone/constants/icons.dart';
 import 'package:youtube_clone/cores/screens/loader.dart';
 import 'package:youtube_clone/cores/widgets/image_button.dart';
+import 'constants/images.dart';
 import 'cores/screens/error.dart';
 import 'features/auth/provider/user_provider.dart';
 
@@ -18,7 +20,7 @@ class HomePage extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                  "assets/images/youtube.jpg",
+                  Images.assetsImagesYoutubeLogo,
                   height: 36,
                 ),
                 const SizedBox(width: 4),
@@ -28,7 +30,7 @@ class HomePage extends StatelessWidget {
                   child: SizedBox(
                     height: 42,
                     child: ImageButton(
-                      image: "cast.png",
+                      image: Iconst.assetsIconsCast,
                       onPressed: () {},
                       haveColor: false,
                     ),
@@ -37,7 +39,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 38,
                   child: ImageButton(
-                    image: "notification.png",
+                    image: Iconst.assetsIconsNotification,
                     onPressed: () {},
                     haveColor: false,
                   ),
@@ -47,7 +49,7 @@ class HomePage extends StatelessWidget {
                   child: SizedBox(
                     height: 41.5,
                     child: ImageButton(
-                      image: "search.png",
+                      image: Iconst.assetsIconsSearch,
                       onPressed: () {},
                       haveColor: false,
                     ),
