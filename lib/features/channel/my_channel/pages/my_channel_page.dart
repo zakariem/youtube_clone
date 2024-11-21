@@ -1,117 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_clone/cores/colors.dart';
-import 'package:youtube_clone/cores/widgets/image_button.dart';
 
-import '../../../../constants/icons.dart';
+import '../widgets/action_butttons.dart';
+import '../widgets/channel_header.dart';
+import '../widgets/channel_info.dart';
+import '../widgets/channel_tabs.dart';
 
 class MyChannelPage extends StatelessWidget {
   const MyChannelPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return const DefaultTabController(
       length: 7,
       child: Scaffold(
         body: SafeArea(
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 24),
-                const CircleAvatar(
-                  radius: 34,
-                  backgroundColor: Colors.grey,
-                ),
-                const SizedBox(height: 6),
-                const Text(
-                  'Zakarie Mahad',
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                RichText(
-                  text: const TextSpan(
-                    style: TextStyle(color: Colors.blueGrey),
-                    children: [
-                      TextSpan(text: 'zakarie@gmail.com  '),
-                      TextSpan(
-                        text: 'No Subscription  ',
-                      ),
-                      TextSpan(text: 'No Videos'),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'More About This Channel',
-                ),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          height: 41,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7),
-                            color: softBlueGreyBackGround,
-                          ),
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Manage Videos',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ImageButton(
-                          onPressed: () {},
-                          image: Iconst.assetsIconsPen,
-                          haveColor: true,
-                        ),
-                      ),
-                      Expanded(
-                        child: ImageButton(
-                          onPressed: () {},
-                          image: Iconst.assetsIconsTimeWatched,
-                          haveColor: true,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const TabBar(
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  labelStyle: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  unselectedLabelColor: Colors.black54,
-                  labelColor: Colors.black,
-                  indicator: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 3,
-                      ),
-                    ),
-                  ),
-                  tabs: [
-                    Tab(text: 'Home'),
-                    Tab(text: 'Videos'),
-                    Tab(text: 'Shorts'),
-                    Tab(text: 'Playlists'),
-                    Tab(text: 'Community'),
-                    Tab(text: 'Channel'),
-                    Tab(text: 'About'),
-                  ],
-                )
+                SizedBox(height: 24),
+                ChannelHeader(),
+                SizedBox(height: 10),
+                ChannelInfo(),
+                SizedBox(height: 10),
+                ActionButtons(),
+                SizedBox(height: 10),
+                ChannelTabs(),
               ],
             ),
           ),
