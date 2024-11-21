@@ -13,42 +13,43 @@ class MyChannelPage extends StatelessWidget {
       length: 7,
       child: Scaffold(
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Center(
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 34,
-                    backgroundColor: Colors.grey,
+          child: Center(
+            child: Column(
+              children: [
+                const SizedBox(height: 24),
+                const CircleAvatar(
+                  radius: 34,
+                  backgroundColor: Colors.grey,
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Zakarie Mahad',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    'Zakarie Mahad',
-                    style: TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                const SizedBox(height: 3),
+                RichText(
+                  text: const TextSpan(
+                    style: TextStyle(color: Colors.blueGrey),
+                    children: [
+                      TextSpan(text: 'zakarie@gmail.com  '),
+                      TextSpan(
+                        text: 'No Subscription  ',
+                      ),
+                      TextSpan(text: 'No Videos'),
+                    ],
                   ),
-                  const SizedBox(height: 3),
-                  RichText(
-                    text: const TextSpan(
-                      style: TextStyle(color: Colors.blueGrey),
-                      children: [
-                        TextSpan(text: 'zakarie@gmail.com  '),
-                        TextSpan(
-                          text: 'No Subscription  ',
-                        ),
-                        TextSpan(text: 'No Videos'),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    'More About This Channel',
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'More About This Channel',
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
                     children: [
                       Expanded(
                         flex: 3,
@@ -83,36 +84,35 @@ class MyChannelPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
-                  const TabBar(
-                    isScrollable: true,
-                    labelStyle: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    unselectedLabelColor: Colors.black54,
-                    labelColor: Colors.black,
-                    indicator: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.black,
-                          width: 3,
-                        ),
+                ),
+                const TabBar(
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  labelStyle: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  unselectedLabelColor: Colors.black54,
+                  labelColor: Colors.black,
+                  indicator: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.black,
+                        width: 3,
                       ),
                     ),
-                    indicatorPadding: EdgeInsets.symmetric(horizontal: 8),
-                    tabs: [
-                      Tab(text: 'Home'),
-                      Tab(text: 'Videos'),
-                      Tab(text: 'Shorts'),
-                      Tab(text: 'Playlists'),
-                      Tab(text: 'Community'),
-                      Tab(text: 'Channel'),
-                      Tab(text: 'About'),
-                    ],
-                  )
-                ],
-              ),
+                  ),
+                  tabs: [
+                    Tab(text: 'Home'),
+                    Tab(text: 'Videos'),
+                    Tab(text: 'Shorts'),
+                    Tab(text: 'Playlists'),
+                    Tab(text: 'Community'),
+                    Tab(text: 'Channel'),
+                    Tab(text: 'About'),
+                  ],
+                )
+              ],
             ),
           ),
         ),
