@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_clone/constants/icons.dart';
 import 'package:youtube_clone/constants/images.dart';
+import 'package:youtube_clone/cores/screens/error.dart';
+import 'package:youtube_clone/cores/screens/loader.dart';
+import 'package:youtube_clone/features/auth/provider/user_provider.dart';
+import 'package:youtube_clone/features/channel/my_channel/repository/edit_field.dart';
+import 'package:youtube_clone/features/channel/my_channel/widgets/edit_setting_dialog.dart';
 import 'package:youtube_clone/features/channel/my_channel/widgets/setting_field_item.dart';
 
-class MyChannelSettings extends StatefulWidget {
+class MyChannelSettings extends ConsumerStatefulWidget {
   const MyChannelSettings({super.key});
 
   @override
-  State<MyChannelSettings> createState() => _MyChannelSettingsState();
+  ConsumerState<MyChannelSettings> createState() => _MyChannelSettingsState();
 }
 
-class _MyChannelSettingsState extends State<MyChannelSettings> {
+class _MyChannelSettingsState extends ConsumerState<MyChannelSettings> {
   bool isChecked = true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ) {
     // Retrieve the screen's width and height
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
+    return ref.watch(currentUserProvider).when(data: (data) => Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,16 +46,20 @@ class _MyChannelSettingsState extends State<MyChannelSettings> {
                     padding: EdgeInsets.only(top: screenHeight * 0.1),
                     child: CircleAvatar(
                       radius: screenWidth * 0.08, // Scaled radius
-                      backgroundColor: Colors.grey,
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Image.asset(
-                          Iconst.assetsIconsCamera,
-                          height:
-                              screenWidth * 0.05, // Icon size relative to width
-                          color: Colors.white,
-                        ),
-                      ),
+                      backgroundImage: NetworkImage(data.profilePic),
+
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      Iconst.assetsIconsCamera,
+                      height:
+                      screenWidth * 0.10, // Icon size relative to width
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -59,18 +69,42 @@ class _MyChannelSettingsState extends State<MyChannelSettings> {
             // Settings items
             SettingsItem(
               identifier: 'Name',
-              onPressed: () {},
-              value: 'Channel Name',
+              onPressed: () {
+                showDialog(context: context, builder: (context) => SettingsDialog(identifier: 'Name',onSave: (name)
+                {
+                  ref.read(editSitingsProvider).editDisplayName(name);
+                  ref.invalidate(currentUserProvider);
+
+
+                },),);
+              },
+              value: data.displayName,
             ),
             SettingsItem(
               identifier: 'Handle',
-              onPressed: () {},
-              value: 'Channel username',
+              onPressed: () {
+                showDialog(context: context, builder: (context) => SettingsDialog(identifier: 'Handle',onSave: (username)
+                {
+                  ref.read(editSitingsProvider).editDisplayUserName(username);
+                  ref.invalidate(currentUserProvider);
+
+
+                },),);
+              },
+              value: data.username,
             ),
             SettingsItem(
               identifier: 'Description',
-              onPressed: () {},
-              value: 'Channel Description',
+              onPressed: () {
+                showDialog(context: context, builder: (context) => SettingsDialog(identifier: 'Description',onSave: (des)
+                {
+                  ref.read(editSitingsProvider).editDisplayDes(des);
+                  ref.invalidate(currentUserProvider);
+
+
+                },),);
+              },
+              value: data.des,
             ),
             // Action checkbox
             Padding(
@@ -97,6 +131,6 @@ class _MyChannelSettingsState extends State<MyChannelSettings> {
           ],
         ),
       ),
-    );
+    ) , error: (error, stackTracer) => ErrorPage(), loading: () => Loader(),);
   }
 }
