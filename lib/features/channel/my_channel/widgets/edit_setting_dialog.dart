@@ -1,47 +1,85 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtube_clone/features/auth/repository/profile_service.dart';
 
-class SettingsDialog extends StatefulWidget {
+class SettingsDialog extends ConsumerStatefulWidget {
   final String identifier;
-  final Function(String channelName)? onSave;
+  final String initialValue;
+  final bool isUsernameField;
+  final Future<void> Function(String value) onSave;
+
   const SettingsDialog({
-    Key? key,
+    super.key,
     required this.identifier,
-    this.onSave,
-  }) : super(key: key);
+    required this.initialValue,
+    required this.onSave,
+    this.isUsernameField = false,
+  });
 
   @override
-  State<SettingsDialog> createState() => _SettingsDialogState();
+  ConsumerState<SettingsDialog> createState() => _SettingsDialogState();
 }
 
-class _SettingsDialogState extends State<SettingsDialog> {
-  final controller = TextEditingController();
+class _SettingsDialogState extends ConsumerState<SettingsDialog> {
+  final TextEditingController _controller = TextEditingController();
+  bool _isValidated = true;
+  bool _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.text = widget.initialValue;
+  }
+
+  Future<void> _validateUsername(String username) async {
+    if (username.isEmpty) {
+      setState(() {
+        _isValidated = false;
+      });
+      return;
+    }
+
+    try {
+      final profileService = ref.read(profileProvider);
+      final isValid = await profileService.validateUsername(username);
+      setState(() {
+        _isValidated = isValid;
+      });
+    } catch (e) {
+      setState(() {
+        _isValidated = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      titlePadding: const EdgeInsets.only(top: 0),
-      title: Padding(
-        padding: const EdgeInsets.only(left: 22, top: 8),
-        child: Text(
-          widget.identifier,
-          style: const TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-        ),
+      title: Text(
+        widget.identifier,
+        style: const TextStyle(fontSize: 15, color: Colors.black),
       ),
-      content: SizedBox(
-        height: 50,
-        child: TextField(
-          controller: controller,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.blue,
-              ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            controller: _controller,
+            onChanged: widget.isUsernameField
+                ? (value) => _validateUsername(value.trim())
+                : null,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              errorText: widget.isUsernameField && !_isValidated
+                  ? 'Username is already taken'
+                  : null,
             ),
           ),
-        ),
+          if (_isSaving)
+            const Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: CircularProgressIndicator(),
+            ),
+        ],
       ),
       actions: [
         TextButton(
@@ -54,10 +92,18 @@ class _SettingsDialogState extends State<SettingsDialog> {
           ),
         ),
         TextButton(
-          onPressed: () {
-            widget.onSave!(controller.text);
-            Navigator.pop(context);
-          },
+          onPressed: widget.isUsernameField && !_isValidated
+              ? null
+              : () async {
+                  setState(() {
+                    _isSaving = true;
+                  });
+                  await widget.onSave(_controller.text.trim());
+                  setState(() {
+                    _isSaving = false;
+                  });
+                  Navigator.pop(context);
+                },
           child: const Text(
             "SAVE",
             style: TextStyle(color: Colors.black),
