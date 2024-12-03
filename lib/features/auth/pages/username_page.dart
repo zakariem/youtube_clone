@@ -10,7 +10,6 @@ class UsernamePage extends ConsumerStatefulWidget {
   @override
   ConsumerState<UsernamePage> createState() => _UsernamePageState();
 }
-
 class _UsernamePageState extends ConsumerState<UsernamePage> {
   final TextEditingController _usernameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -21,13 +20,15 @@ class _UsernamePageState extends ConsumerState<UsernamePage> {
     super.dispose();
   }
 
-  // Corrected: Read the UsernameProvider and validate the username
-  Future<void> validateUsername() async {
-    final profileService = ref.read(profileProvider);
-    final username = _usernameController.text.trim();
-
-    final isValid = await profileService.validateUsername(username);
-    ref.read(usernameValidationProvider.notifier).state = isValid;
+  Future<void> validateUsername(String username) async {
+    try {
+      final profileService = ref.read(profileProvider);
+      final isValid = await profileService.validateUsername(username);
+      ref.read(usernameValidationProvider.notifier).state = isValid;
+    } catch (e) {
+      // Handle any exceptions (e.g., network issues)
+      ref.read(usernameValidationProvider.notifier).state = false;
+    }
   }
 
   @override
@@ -53,7 +54,7 @@ class _UsernamePageState extends ConsumerState<UsernamePage> {
                     hintText: 'Enter the username',
                     suffixIcon: isValidated
                         ? const Icon(Icons.verified_user_rounded,
-                            color: Colors.green)
+                        color: Colors.green)
                         : const Icon(Icons.error, color: Colors.red),
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue),
@@ -65,6 +66,11 @@ class _UsernamePageState extends ConsumerState<UsernamePage> {
                       borderSide: BorderSide(color: Colors.green),
                     ),
                   ),
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      validateUsername(value.trim());
+                    }
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a username';
@@ -73,24 +79,24 @@ class _UsernamePageState extends ConsumerState<UsernamePage> {
                     }
                     return null;
                   },
-                  autovalidateMode: AutovalidateMode.onUnfocus,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const Spacer(),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      await validateUsername();
+                      await validateUsername(_usernameController.text.trim());
                       if (_formKey.currentState?.validate() ?? false) {
                         await ref
                             .read(userDataServiceProvider)
                             .addUserDataToFirestore(
-                              username: _usernameController.text.trim(),
-                            );
+                          username: _usernameController.text.trim(),
+                        );
                       }
                     },
-                    style: const ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(Colors.green),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
                     ),
                     child: const Text(
                       'Continue',
