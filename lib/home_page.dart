@@ -7,6 +7,7 @@ import 'constants/images.dart';
 import 'cores/screens/error.dart';
 import 'features/auth/provider/user_provider.dart';
 import 'features/content/bottom_navigation.dart';
+import 'features/upload/upload_bottom_sheet.dart';
 import 'pages.dart';
 
 class HomePage extends StatefulWidget {
@@ -90,6 +91,10 @@ class _HomePageState extends State<HomePage> {
           if (index != 2) {
             currentIndex = index;
             setState(() {});
+          } else {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) => const CreateBottomSheet());
           }
         },
       ),
