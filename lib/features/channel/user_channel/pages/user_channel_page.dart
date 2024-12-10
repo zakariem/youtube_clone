@@ -82,9 +82,23 @@ class _UserChannelPageState extends State<UserChannelPage> {
               ),
             ),
             hasvideos
-                ? Text('Videos')
-                : Center(
-                    child: Text('No videos'),
+                ? Text(
+                    'Videos',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.sizeOf(context).height * 0.2),
+                    child: Text(
+                      'No videos',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
                   ),
           ],
         ),

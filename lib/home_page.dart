@@ -6,9 +6,18 @@ import 'package:youtube_clone/cores/widgets/image_button.dart';
 import 'constants/images.dart';
 import 'cores/screens/error.dart';
 import 'features/auth/provider/user_provider.dart';
+import 'features/content/bottom_navigation.dart';
+import 'pages.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +29,7 @@ class HomePage extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                  Images.assetsImagesYoutubeLogo,
+                  Images.assetsImagesYoutube,
                   height: 36,
                 ),
                 const SizedBox(width: 4),
@@ -72,8 +81,17 @@ class HomePage extends StatelessWidget {
                 }),
               ],
             ),
+            Expanded(child: pages[currentIndex]),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigation(
+        onTabChange: (index) {
+          if (index != 2) {
+            currentIndex = index;
+            setState(() {});
+          }
+        },
       ),
     );
   }
